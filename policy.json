@@ -13,7 +13,7 @@
             "Resource": "*",
             "Condition": {
                 "StringEquals": {
-                    "aws:RequestTag/Environment": "ENVTAGVALUE"
+                    "aws:RequestTag/REQUIREDTAGKEY": "REQUIREDTAGVALUE"
                 }
             }
         },
@@ -37,7 +37,7 @@
             ],
             "Condition": {
                 "StringEquals": {
-                    "aws:RequestTag/Environment": "ENVTAGVALUE"
+                    "aws:RequestTag/REQUIREDTAGKEY": "REQUIREDTAGVALUE"
                 }
             }
         },
@@ -84,7 +84,7 @@
             ],
             "Condition": {
                 "StringEquals": {
-                    "ec2:ResourceTag/Environment": "ENVTAGVALUE"
+                    "ec2:ResourceTag/REQUIREDTAGKEY": "REQUIREDTAGVALUE"
                 }
             }
         },
@@ -100,7 +100,7 @@
             "Condition": {
                 "StringEquals": {
                     "ec2:CreateAction": "RunInstances",
-                    "aws:RequestTag/Environment": "ENVTAGVALUE"
+                    "aws:RequestTag/REQUIREDTAGKEY": "REQUIREDTAGVALUE"
                 }
             }
         },
