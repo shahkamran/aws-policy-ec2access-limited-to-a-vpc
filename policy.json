@@ -1,0 +1,130 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "ManageKPWithTagRestrictions",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:ImportKeyPair",
+                "ec2:CreateKeyPair",
+                "ec2:DescribeKeyPairs",
+                "ec2:DeleteKeyPair"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "aws:RequestTag/Environment": "ENVTAGVALUE"
+                }
+            }
+        },
+        {
+            "Sid": "ManageSGWithTagRestrictions",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:CreateSecurityGroup",
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:AuthorizeSecurityGroupEgress"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "RunInstancesWithTagRestrictions",
+            "Effect": "Allow",
+            "Action": "ec2:RunInstances",
+            "Resource": [
+                "arn:aws:ec2:eu-west-2:AWSACCOUNTNO:instance/*",
+                "arn:aws:ec2:eu-west-2:AWSACCOUNTNO:volume/*"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "aws:RequestTag/Environment": "ENVTAGVALUE"
+                }
+            }
+        },
+        {
+            "Sid": "EC2RunInstancesVpcSubnet",
+            "Effect": "Allow",
+            "Action": "ec2:RunInstances",
+            "Resource": "arn:aws:ec2:eu-west-2:AWSACCOUNTNO:subnet/*",
+            "Condition": {
+                "StringEquals": {
+                    "ec2:Vpc": "arn:aws:ec2:eu-west-2:AWSACCOUNTNO:vpc/VPCID"
+                }
+            }
+        },
+        {
+            "Sid": "EC2CreateRouteRestrictedToVPC",
+            "Effect": "Allow",
+            "Action": "ec2:CreateRoute",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "ec2:Vpc": "arn:aws:ec2:eu-west-2:AWSACCOUNTNO:vpc/VPCID"
+                }
+            }
+        },
+        {
+            "Sid": "AllowEC2InstanceActionsTagBased",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DetachVolume",
+                "ec2:AttachVolume",
+                "ec2:RebootInstances",
+                "ec2:TerminateInstances",
+                "ec2:StartInstances",
+                "ec2:DisassociateIamInstanceProfile",
+                "ec2:StopInstances",
+                "ec2:GetConsoleScreenshot",
+                "ec2:AssociateIamInstanceProfile",
+                "ec2:ReplaceIamInstanceProfileAssociation"
+            ],
+            "Resource": [
+                "arn:aws:ec2:eu-west-2:AWSACCOUNTNO:instance/*",
+                "arn:aws:ec2:eu-west-2:AWSACCOUNTNO:volume/*"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "ec2:ResourceTag/Environment": "ENVTAGVALUE"
+                }
+            }
+        },
+        {
+            "Sid": "AllowCreateTagsOnlyLaunching",
+            "Effect": "Allow",
+            "Action": "ec2:CreateTags",
+            "Resource": [
+                "arn:aws:ec2:eu-west-2:AWSACCOUNTNO:instance/*",
+                "arn:aws:ec2:eu-west-2:AWSACCOUNTNO:volume/*",
+                "arn:aws:ec2:eu-west-2:AWSACCOUNTNO:network-interface/*"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "ec2:CreateAction": "RunInstances",
+                    "aws:RequestTag/Environment": "ENVTAGVALUE"
+                }
+            }
+        },
+        {
+            "Sid": "EC2OtherNonResourcePermissions",
+            "Effect": "Allow",
+            "Action": "ec2:RunInstances",
+            "Resource": [
+                "arn:aws:ec2:eu-west-2::snapshot/*",
+                "arn:aws:ec2:eu-west-2::image/*",
+                "arn:aws:ec2:eu-west-2:AWSACCOUNTNO:key-pair/*",
+                "arn:aws:ec2:eu-west-2:AWSACCOUNTNO:security-group/*",
+                "arn:aws:ec2:eu-west-2:AWSACCOUNTNO:network-interface/*"
+            ]
+        },
+        {
+            "Sid": "ReadOnlyEC2WithNonResource",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:Describe*",
+                "iam:ListInstanceProfiles",
+                "iam:PassRole"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
