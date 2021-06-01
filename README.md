@@ -1,11 +1,11 @@
 # aws-policy-ec2access-limited-to-a-vpc
 AWS Policy to define user, group or role access to manage EC2 instances in a specific VPC
 #
+In order to use the attached policy in Json policy file, you will have to change following variables to the actual or required values.
 #
-#
-* AWS Account No: AWSACCOUNTNO (Change this to the primary AWS Account number)
-* Tag Key Required: Environment
-* Tag Value: ENVTAGVALUE (Change this to the required value in policy document)
-* VPC ID: VPCID (Change this to the actual VPC ID as the only VPC that will be allowed)
+* AWS Account No: [AWSACCOUNTNO]
+* Tag Key Required: [REQUIREDTAGKEY]
+* Tag Value: [REQUIREDTAGVALUE]
+* VPC ID: [VPCID]
 #
 #
